@@ -9,16 +9,12 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use RegisterConsumerDTO;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterConsumerAction
 {
-    public function __construct(
-        private readonly string $name, 
-        private readonly string $email, 
-        private readonly string $password,
-        private readonly string $cpf
-    ){}
+    public function __construct(private RegisterConsumerDTO $data){}
 
     public function execute(): Consumer
     {
@@ -38,9 +34,9 @@ class RegisterConsumerAction
     private function createUser(): User
     {
         return User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
+            'name' => $this->data->name,
+            'email' => $this->data->email,
+            'password' => Hash::make($this->data->password),
         ]);
     }
 
@@ -48,7 +44,7 @@ class RegisterConsumerAction
     {
         return Consumer::create([
             'user_id' => $user->id,
-            'cpf' => $this->cpf,
+            'cpf' => $this->data->cpf,
         ]);
     }
 
@@ -64,9 +60,9 @@ class RegisterConsumerAction
     private function handleException(Exception $e): never
     {
         Log::error('Consumer registration failed', [
-            'name' => $this->name,
-            'email' => $this->email,
-            'cpf' => $this->cpf,
+            'name' => $this->data->name,
+            'email' => $this->data->email,
+            'cpf' => $this->data->cpf,
             'error' => [
                 'code' => $e->getCode(),
                 'message' => $e->getMessage()
