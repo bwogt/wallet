@@ -2,6 +2,7 @@
 
 namespace App\Actions\Auth\Consumer;
 
+use App\Dto\Auth\Login\LoginUserDTO;
 use App\Exceptions\HttpJsonResponseException;
 use App\Models\Consumer;
 use App\Models\User;
@@ -16,7 +17,7 @@ class RegisterConsumerAction
 {
     public function __construct(private RegisterConsumerDTO $data){}
 
-    public function execute(): Consumer
+    public function execute(): LoginUserDTO
     {
        try{
            return DB::transaction(function (){
@@ -24,7 +25,10 @@ class RegisterConsumerAction
                 $consumer = $this->createConsumer($user);
                 $this->logSuccess($consumer);
 
-                return $consumer;
+                return new LoginUserDTO(
+                    user: $user,
+                    token: $this->createPersonalAccessToken($user)
+                );
             });
        }catch(Exception $e){
             $this->handleException($e);
@@ -46,6 +50,11 @@ class RegisterConsumerAction
             'user_id' => $user->id,
             'cpf' => $this->data->cpf,
         ]);
+    }
+
+    private function createPersonalAccessToken(User $user): string
+    {
+        return $user->createToken('auth_token')->plainTextToken;
     }
 
     private function logSuccess(Consumer $consumer): void
