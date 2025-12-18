@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Dto\Auth\Consumer;
+
 class RegisterConsumerDTO
 {
     public function __construct(

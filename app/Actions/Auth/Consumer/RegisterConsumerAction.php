@@ -2,12 +2,12 @@
 
 namespace App\Actions\Auth\Consumer;
 
+use App\Dto\Auth\Consumer\RegisterConsumerDTO;
 use App\Dto\Auth\Login\LoginDTO;
-use App\Exceptions\HttpJsonResponseException;
+use App\Http\Exceptions\HttpJsonResponseException;
 use App\Models\Consumer;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use RegisterConsumerDTO;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterConsumerAction
@@ -26,7 +26,7 @@ class RegisterConsumerAction
                 $this->logSuccess($consumer);
 
                 return new LoginDTO(
-                    user: $user,
+                    user: $user->load('consumer'),
                     token: $this->createPersonalAccessToken($user)
                 );
             });
@@ -80,7 +80,7 @@ class RegisterConsumerAction
 
         throw new HttpJsonResponseException(
             trans('auth.register.failed.consumer'),
-            Response::HTTP_UNPROCESSABLE_ENTITY
+            Response::HTTP_INTERNAL_SERVER_ERROR
         );
     }
 }
