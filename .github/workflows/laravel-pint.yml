@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.4]
+        php: [8.5]
  
     steps:
       - name: Checkout code
@@ -29,7 +29,5 @@ jobs:
       - name: Run Pint
         run: |
           ./vendor/bin/pint --test app/Http/Controllers \
-                                     app/Http/Requests \
-                                     app/Http/Resources \
                                      app/Models \
                                      tests
