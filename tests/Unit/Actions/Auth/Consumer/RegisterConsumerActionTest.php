@@ -49,6 +49,22 @@ class RegisterConsumerActionTest extends TestCase
         ]);
     }
 
+    public function test_should_create_a_wallet_for_the_new_user(): void
+    {
+        $result = ($this->action)($this->data);
+
+        $this->assertDatabaseHas('wallets', [
+            'user_id' => $result->user->id,
+            'balance' => 0,
+        ]);
+    }
+
+    public function test_should_create_a_wallet_with_zero_balance_for_the_new_user(): void
+    {
+        $result = ($this->action)($this->data);
+        $this->assertEquals(0, $result->user->wallet->balance);
+    }
+
     public function test_should_throw_an_exception_when_an_internal_server_error_occurs(): void
     {
         $this->expectException( HttpJsonResponseException::class);

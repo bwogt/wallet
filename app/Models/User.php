@@ -49,6 +49,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the wallet associated with the user.
+     */
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    /**
      * Get the consumer associated with the user.
      */
     public function consumer(): HasOne

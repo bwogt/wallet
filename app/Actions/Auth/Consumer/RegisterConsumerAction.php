@@ -23,7 +23,9 @@ class RegisterConsumerAction
             return $this->db->transaction(function () use ($data) {
                 $user = $this->createUser($data);
                 $consumer = $this->createConsumer($user, $data);
-                $this->logSuccess($consumer);
+
+                $this->createWallet($user);
+                $this->logSuccess($consumer, $user);
 
                 return new LoginDTO(
                     user: $user->load('consumer'),
@@ -52,17 +54,22 @@ class RegisterConsumerAction
         ]);
     }
 
+    private function createWallet(User $user): void
+    {
+        $user->wallet()->create();
+    }
+
     private function createPersonalAccessToken(User $user): string
     {
         return $user->createToken('auth_token')->plainTextToken;
     }
 
-    private function logSuccess(Consumer $consumer): void
+    private function logSuccess(Consumer $consumer, User $user): void
     {
         $this->logger->info('Consumer registered successfully', [
             'consumer_id' => $consumer->id,
-            'user_id' => $consumer->user_id,
-            'name' => $consumer->user->name,
+            'user_id' => $user->id,
+            'name' => $user->name,
         ]);
     }
 
