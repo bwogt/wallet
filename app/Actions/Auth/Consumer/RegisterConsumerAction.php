@@ -2,10 +2,13 @@
 
 namespace App\Actions\Auth\Consumer;
 
+use App\Exceptions\HttpJsonResponseException;
 use App\Models\Consumer;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterConsumerAction
 {
@@ -16,7 +19,7 @@ class RegisterConsumerAction
         private readonly string $cpf
     ){}
 
-    public function execute(): Consumer| null
+    public function execute(): Consumer
     {
        try{
            return DB::transaction(function (){
@@ -26,9 +29,8 @@ class RegisterConsumerAction
 
                 return $consumer;
             });
-       }catch(\Exception $e){
-            $this->logError($e);
-            throw $e;
+       }catch(Exception $e){
+            $this->handleException($e);
        }
     }
 
@@ -58,7 +60,7 @@ class RegisterConsumerAction
         ]);
     }
 
-    private function logError(\Exception $e): void
+    private function handleException(Exception $e): never
     {
         Log::error('Consumer registration failed', [
             'name' => $this->name,
@@ -69,5 +71,10 @@ class RegisterConsumerAction
                 'message' => $e->getMessage()
             ],
         ]);
+
+        throw new HttpJsonResponseException(
+            trans('auth.register.failed.consumer'), 
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        );
     }
 }
