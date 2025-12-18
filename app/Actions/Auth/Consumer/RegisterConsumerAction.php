@@ -7,6 +7,7 @@ use App\Models\Consumer;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,7 +40,7 @@ class RegisterConsumerAction
         return User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'password' => $this->password,
+            'password' => Hash::make($this->password),
         ]);
     }
 
