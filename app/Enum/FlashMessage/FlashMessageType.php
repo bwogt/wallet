@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum\Deposit;
+namespace App\Enum\FlashMessage;
 
 enum FlashMessageType: string
 {

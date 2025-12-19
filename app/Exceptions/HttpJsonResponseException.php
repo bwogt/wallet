@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Enum\Deposit\FlashMessageType;
+use App\Enum\FlashMessage\FlashMessageType;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
