@@ -15,7 +15,7 @@ class LoginResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-         return [
+        return [
             'user' => UserBaseResource::make($this->user),
             'token' => $this->token,
         ];
