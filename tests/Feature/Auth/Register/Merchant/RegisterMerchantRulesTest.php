@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Auth\Register\Consumer;
+namespace Tests\Feature\Auth\Register\Merchant;
 
 use App\Enum\FlashMessage\FlashMessageType;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 
-class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
+class RegisterMerchantRulesTest extends RegisterMerchantTestSetUp
 {
     public function test_should_return_all_errors_when_the_required_fields_are_null_values(): void
     {
@@ -21,8 +21,8 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
                     ->where('errors.email.0', trans('validation.required', [
                         'attribute' => 'email',
                     ]))
-                    ->where('errors.cpf.0', trans('validation.required', [
-                        'attribute' => 'cpf',
+                    ->where('errors.cnpj.0', trans('validation.required', [
+                        'attribute' => 'cnpj',
                     ]))
                     ->where('errors.password.0', trans('validation.required', [
                         'attribute' => trans('validation.attributes.password'),
@@ -70,15 +70,15 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             );
     }
 
-    public function test_should_return_an_error_when_the_cpf_field_values_exists_in_the_database(): void
+    public function test_should_return_an_error_when_the_cnpj_field_values_exists_in_the_database(): void
     {
-        $this->postJson($this->route(), $this->validUserData(['cpf' => $this->user->cpf]))
+        $this->postJson($this->route(), $this->validUserData(['cnpj' => $this->user->cnpj]))
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
                     ->where('message.text', trans('flash_messages.errors'))
-                    ->where('errors.cpf.0', trans('validation.unique', [
-                        'attribute' => 'cpf',
+                    ->where('errors.cnpj.0', trans('validation.unique', [
+                        'attribute' => 'cnpj',
                     ]))
             );
     }
