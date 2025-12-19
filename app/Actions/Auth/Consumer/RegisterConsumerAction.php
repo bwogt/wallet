@@ -4,10 +4,9 @@ namespace App\Actions\Auth\Consumer;
 
 use App\Dto\Auth\Consumer\RegisterConsumerDTO;
 use App\Dto\Auth\Login\LoginDTO;
+use App\Enum\User\UserType;
 use App\Exceptions\HttpJsonResponseException;
-use App\Models\Consumer;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterConsumerAction
@@ -22,13 +21,11 @@ class RegisterConsumerAction
         try {
             return $this->db->transaction(function () use ($data) {
                 $user = $this->createUser($data);
-                $consumer = $this->createConsumer($user, $data);
-
                 $this->createWallet($user);
-                $this->logSuccess($consumer, $user);
+                $this->logSuccess($user);
 
                 return new LoginDTO(
-                    user: $user->load('consumer'),
+                    user: $user,
                     token: $this->createPersonalAccessToken($user)
                 );
             });
@@ -40,17 +37,11 @@ class RegisterConsumerAction
     private function createUser(RegisterConsumerDTO $data): User
     {
         return User::create([
+            'type' => UserType::CONSUMER,
             'name' => $data->name,
             'email' => $data->email,
-            'password' => Hash::make($data->password),
-        ]);
-    }
-
-    private function createConsumer(User $user, RegisterConsumerDTO $data): Consumer
-    {
-        return Consumer::create([
-            'user_id' => $user->id,
             'cpf' => $data->cpf,
+            'password' => $data->password,
         ]);
     }
 
@@ -64,21 +55,20 @@ class RegisterConsumerAction
         return $user->createToken('auth_token')->plainTextToken;
     }
 
-    private function logSuccess(Consumer $consumer, User $user): void
+    private function logSuccess(User $user): void
     {
-        $this->logger->info('Consumer registered successfully', [
-            'consumer_id' => $consumer->id,
+        $this->logger->info('User registered successfully', [
             'user_id' => $user->id,
+            'type' => $user->type->value,
             'name' => $user->name,
         ]);
     }
 
     private function handleException(\Exception $e, RegisterConsumerDTO $data): never
     {
-        $this->logger->error('Consumer registration failed', [
+        $this->logger->error('User registration failed', [
             'name' => $data->name,
             'email' => $data->email,
-            'name' => $data->name,
             'error' => [
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),
@@ -86,7 +76,7 @@ class RegisterConsumerAction
         ]);
 
         throw new HttpJsonResponseException(
-            trans('auth.register.failed.consumer'),
+            trans('auth.register.failed'),
             Response::HTTP_INTERNAL_SERVER_ERROR
         );
     }

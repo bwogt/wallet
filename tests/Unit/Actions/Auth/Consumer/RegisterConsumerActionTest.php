@@ -4,9 +4,11 @@ namespace Tests\Unit\Actions\Auth\Consumer;
 
 use App\Actions\Auth\Consumer\RegisterConsumerAction;
 use App\Dto\Auth\Login\LoginDTO;
+use App\Enum\User\UserType;
 use App\Exceptions\HttpJsonResponseException;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Mockery;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -33,20 +35,19 @@ class RegisterConsumerActionTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'id' => $result->user->id,
+            'type' => UserType::CONSUMER->value,
             'name' => $this->data->name,
             'email' => $this->data->email,
+            'cpf' => $this->data->cpf,
         ]);
     }
 
-    public function test_should_create_a_new_consumer_in_the_database(): void
+    public function test_password_should_be_hashed_in_the_database(): void
     {
         $result = ($this->action)($this->data);
 
-        $this->assertDatabaseHas('consumers', [
-            'id' => $result->user->consumer->id,
-            'user_id' => $result->user->id,
-            'cpf' => $this->data->cpf,
-        ]);
+        $this->assertNotEquals($this->data->password, $result->user->password);
+        $this->assertTrue(Hash::check($this->data->password, $result->user->password));
     }
 
     public function test_should_create_a_wallet_for_the_new_user(): void
@@ -69,7 +70,7 @@ class RegisterConsumerActionTest extends TestCase
     {
         $this->expectException(HttpJsonResponseException::class);
         $this->expectExceptionCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-        $this->expectExceptionMessage(trans('auth.register.failed.consumer'));
+        $this->expectExceptionMessage(trans('auth.register.failed'));
 
         $dbMock = Mockery::mock(\Illuminate\Database\DatabaseManager::class);
         $dbMock->shouldReceive('transaction')

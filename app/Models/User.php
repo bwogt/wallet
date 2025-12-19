@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enum\User\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,8 +22,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'type',
         'name',
         'email',
+        'cpf',
+        'cnpj',
         'password',
     ];
 
@@ -43,6 +48,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'type' => UserType::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
@@ -54,13 +60,5 @@ class User extends Authenticatable
     public function wallet(): HasOne
     {
         return $this->hasOne(Wallet::class);
-    }
-
-    /**
-     * Get the consumer associated with the user.
-     */
-    public function consumer(): HasOne
-    {
-        return $this->hasOne(Consumer::class);
     }
 }

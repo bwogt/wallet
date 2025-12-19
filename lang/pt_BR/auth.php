@@ -17,8 +17,6 @@ return [
     'password' => 'A senha informada está incorreta.',
     'throttle' => 'Muitas tentativas de login. Tente novamente em :seconds segundos.',
     'register' => [
-        'failed' => [
-            'consumer' => 'Não foi possível registrar o consumidor. Por favor, tente novamente mais tarde.',
-        ]
+        'failed' => 'Não foi possível registrar o usuário. Por favor, tente novamente mais tarde.',
     ], 
 ];
