@@ -4,7 +4,7 @@ namespace Tests\Unit\Actions\Auth\Consumer;
 
 use App\Actions\Auth\Consumer\RegisterConsumerAction;
 use App\Dto\Auth\Login\LoginDTO;
-use App\Http\Exceptions\HttpJsonResponseException;
+use App\Exceptions\HttpJsonResponseException;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -67,7 +67,7 @@ class RegisterConsumerActionTest extends TestCase
 
     public function test_should_throw_an_exception_when_an_internal_server_error_occurs(): void
     {
-        $this->expectException( HttpJsonResponseException::class);
+        $this->expectException(HttpJsonResponseException::class);
         $this->expectExceptionCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         $this->expectExceptionMessage(trans('auth.register.failed.consumer'));
 
@@ -77,7 +77,7 @@ class RegisterConsumerActionTest extends TestCase
             ->andThrow(new Exception('Simulates a DB error',
                 Response::HTTP_INTERNAL_SERVER_ERROR
             ));
-        
+
         $action = new RegisterConsumerAction($dbMock, $this->logger);
         $action($this->data);
     }

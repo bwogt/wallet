@@ -4,7 +4,7 @@ namespace App\Actions\Auth\Consumer;
 
 use App\Dto\Auth\Consumer\RegisterConsumerDTO;
 use App\Dto\Auth\Login\LoginDTO;
-use App\Http\Exceptions\HttpJsonResponseException;
+use App\Exceptions\HttpJsonResponseException;
 use App\Models\Consumer;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

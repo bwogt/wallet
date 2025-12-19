@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Exceptions;
+namespace App\Exceptions;
 
 use App\Enum\Deposit\FlashMessageType;
 use Exception;
