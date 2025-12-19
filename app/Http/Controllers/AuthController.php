@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Auth\Consumer\RegisterConsumerAction;
+use App\Actions\Auth\Register\RegisterConsumerAction;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Auth\Consumer\Register\RegisterConsumerRequest;
 use App\Http\Resources\Auth\LoginResource;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function store(RegisterConsumerRequest $request, RegisterConsumerAction $action)
+    public function registerConsumer(RegisterConsumerRequest $request, RegisterConsumerAction $action)
     {
         $loginDTO = $action($request->toDTO());
 

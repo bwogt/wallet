@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Actions\Auth\Consumer;
+namespace App\Actions\Auth\Register;
 
-use App\Dto\Auth\Consumer\RegisterConsumerDTO;
 use App\Dto\Auth\Login\LoginDTO;
-use App\Enum\User\UserType;
+use App\Dto\Auth\Register\RegisterUserDTOInterface;
 use App\Exceptions\HttpJsonResponseException;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
-class RegisterConsumerAction
+abstract class BaseRegisterUserAction
 {
     public function __construct(
         private readonly \Illuminate\Database\DatabaseManager $db,
         private readonly \Psr\Log\LoggerInterface $logger
     ) {}
 
-    public function __invoke(RegisterConsumerDTO $data): LoginDTO
+    public function __invoke(RegisterUserDTOInterface $data): LoginDTO
     {
         try {
             return $this->db->transaction(function () use ($data) {
@@ -34,28 +33,19 @@ class RegisterConsumerAction
         }
     }
 
-    private function createUser(RegisterConsumerDTO $data): User
-    {
-        return User::create([
-            'type' => UserType::CONSUMER,
-            'name' => $data->name,
-            'email' => $data->email,
-            'cpf' => $data->cpf,
-            'password' => $data->password,
-        ]);
-    }
+    abstract protected function createUser(RegisterUserDTOInterface $data): User;
 
-    private function createWallet(User $user): void
+    protected function createWallet(User $user): void
     {
         $user->wallet()->create();
     }
 
-    private function createPersonalAccessToken(User $user): string
+    protected function createPersonalAccessToken(User $user): string
     {
         return $user->createToken('auth_token')->plainTextToken;
     }
 
-    private function logSuccess(User $user): void
+    protected function logSuccess(User $user): void
     {
         $this->logger->info('User registered successfully', [
             'user_id' => $user->id,
@@ -64,11 +54,11 @@ class RegisterConsumerAction
         ]);
     }
 
-    private function handleException(\Exception $e, RegisterConsumerDTO $data): never
+    protected function handleException(\Exception $e, RegisterUserDTOInterface $data): never
     {
         $this->logger->error('User registration failed', [
-            'name' => $data->name,
-            'email' => $data->email,
+            'name' => $data->getName(),
+            'email' => $data->getEmail(),
             'error' => [
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),

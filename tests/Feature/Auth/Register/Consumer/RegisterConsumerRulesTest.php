@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature\Auth\Register;
+namespace Tests\Feature\Auth\Register\Consumer;;
 
 use App\Enum\FlashMessage\FlashMessageType;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 
-class RegisterUserRulesTest extends RegisterUserTestSetUp
+class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
 {
     public function test_should_return_all_errors_when_the_required_fields_are_null_values(): void
     {

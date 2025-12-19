@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth\Consumer\Register;
 
-use App\Dto\Auth\Consumer\RegisterConsumerDTO;
+use App\Dto\Auth\Register\RegisterConsumerDTO;
 use App\Http\Requests\Base\ApiFormRequest;
 use App\Rules\CpfRule;
 use Illuminate\Validation\Rules;
@@ -17,6 +17,9 @@ class RegisterConsumerRequest extends ApiFormRequest
         return true;
     }
 
+    /**
+     * Convert the request data to a DTO.
+     */
     public function toDTO(): RegisterConsumerDTO
     {
         return new RegisterConsumerDTO(

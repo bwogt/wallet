@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Actions\Auth\Consumer;
+namespace Tests\Unit\Actions\Auth\Register\Consumer;
 
-use App\Actions\Auth\Consumer\RegisterConsumerAction;
+use App\Actions\Auth\Register\RegisterConsumerAction;
 use App\Dto\Auth\Login\LoginDTO;
 use App\Enum\User\UserType;
 use App\Exceptions\HttpJsonResponseException;
@@ -29,7 +29,7 @@ class RegisterConsumerActionTest extends TestCase
         $this->assertInstanceOf(LoginDTO::class, $result);
     }
 
-    public function test_should_create_a_new_user_in_the_database(): void
+    public function test_should_create_a_new_consumer_user_in_the_database(): void
     {
         $result = ($this->action)($this->data);
 

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->name('api.v1.')->group(function () {
     Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
         Route::prefix('consumer')->name('consumer.')->group(function () {
-            Route::post('/register', 'store')->name('register');
+            Route::post('/register', 'registerConsumer')->name('register');
         });
     });
 });

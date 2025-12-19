@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Auth\Register;
+namespace Tests\Feature\Auth\Register\Consumer;
 
 use App\Enum\FlashMessage\FlashMessageType;
 use Illuminate\Testing\Fluent\AssertableJson;
 
-class RegisterUserAccessTest extends RegisterUserTestSetUp
+class RegisterConsumerAccessTest extends RegisterConsumerTestSetUp
 {
     public function test_should_allow_unauthenticated_user_to_register(): void
     {

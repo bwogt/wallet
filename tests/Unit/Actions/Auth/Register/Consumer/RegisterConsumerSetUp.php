@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Actions\Auth\Consumer;
+namespace Tests\Unit\Actions\Auth\Register\Consumer;
 
-use App\Actions\Auth\Consumer\RegisterConsumerAction;
-use App\Dto\Auth\Consumer\RegisterConsumerDTO;
+use App\Actions\Auth\Register\RegisterConsumerAction;
+use App\Dto\Auth\Register\RegisterConsumerDTO;
 use Mockery;
 use Psr\Log\LoggerInterface;
 
