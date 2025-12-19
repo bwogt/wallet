@@ -179,6 +179,11 @@ return [
             'sequential' => 'O CPF não pode ser uma sequência de números repetidos.',
             'invalid' => 'O CPF informado é inválido.',
         ],
+        'cnpj' => [
+            'format' => 'O formato do CNPJ informado é inválido.',
+            'sequential' => 'O CNPJ não pode ser uma sequência de números repetidos.',
+            'invalid' => 'O CNPJ informado é inválido.',
+        ],
     ],
 
     /*
