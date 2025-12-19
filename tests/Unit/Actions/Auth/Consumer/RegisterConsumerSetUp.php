@@ -38,7 +38,7 @@ trait RegisterConsumerSetUp
         $faker = \Faker\Factory::create('pt_BR');
 
         $this->data = new RegisterConsumerDTO(
-            name:  $faker->name(),
+            name: $faker->name(),
             email: $faker->unique()->safeEmail(),
             password: 'password',
             cpf: $faker->cpf()
