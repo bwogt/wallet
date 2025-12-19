@@ -4,7 +4,7 @@ namespace App\Http\Requests\Auth\Consumer\Register;
 
 use App\Dto\Auth\Register\RegisterConsumerDTO;
 use App\Http\Requests\Base\ApiFormRequest;
-use App\Rules\CpfRule;
+use App\Rules\Cpf;
 use Illuminate\Validation\Rules;
 
 class RegisterConsumerRequest extends ApiFormRequest
@@ -41,7 +41,7 @@ class RegisterConsumerRequest extends ApiFormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'max:255', Rules\Password::defaults()],
-            'cpf' => ['required', 'size:14', new CpfRule, 'unique:users,cpf'],
+            'cpf' => ['required', 'size:14', new Cpf, 'unique:users,cpf'],
         ];
     }
 }

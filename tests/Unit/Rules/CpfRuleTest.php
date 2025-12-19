@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Rules;
 
-use App\Rules\CpfRule;
+use App\Rules\Cpf;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
@@ -23,7 +23,7 @@ class CpfRuleTest extends TestCase
         foreach ($cpfs as $cpf) {
             $this->assertTrue(Validator::make(
                 ['cpf' => $cpf],
-                ['cpf' => new CpfRule]
+                ['cpf' => new Cpf]
             )->passes());
         }
     }
@@ -34,7 +34,7 @@ class CpfRuleTest extends TestCase
 
         $this->assertFalse(Validator::make(
             ['cpf' => $cpf],
-            ['cpf' => new CpfRule]
+            ['cpf' => new Cpf]
         )->passes(), "{$cpf} should be valid");
     }
 
@@ -44,7 +44,7 @@ class CpfRuleTest extends TestCase
 
         $this->assertFalse(Validator::make(
             ['cpf' => $cpf],
-            ['cpf' => new CpfRule]
+            ['cpf' => new Cpf]
         )->passes(), "{$cpf} should be valid");
     }
 
@@ -55,7 +55,7 @@ class CpfRuleTest extends TestCase
         foreach ($cpfs as $cpf) {
             $this->assertFalse(Validator::make(
                 ['cpf' => $cpf],
-                ['cpf' => new CpfRule]
+                ['cpf' => new Cpf]
             )->passes(), "{$cpf} should be valid");
         }
     }
