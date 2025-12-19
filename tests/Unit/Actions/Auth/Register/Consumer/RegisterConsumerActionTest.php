@@ -7,22 +7,12 @@ use App\Dto\Auth\Login\LoginDTO;
 use App\Enum\User\UserType;
 use App\Exceptions\HttpJsonResponseException;
 use Exception;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Mockery;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\TestCase;
 
-class RegisterConsumerActionTest extends TestCase
+class RegisterConsumerActionTest extends RegisterConsumerSetUp
 {
-    use RefreshDatabase, RegisterConsumerSetUp;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->prepareScenario();
-    }
-
     public function test_should_return_an_instance_of_login_dto_when_registration_is_successful(): void
     {
         $result = ($this->action)($this->data);

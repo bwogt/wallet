@@ -4,17 +4,23 @@ namespace Tests\Unit\Actions\Auth\Register\Consumer;
 
 use App\Actions\Auth\Register\RegisterConsumerAction;
 use App\Dto\Auth\Register\RegisterConsumerDTO;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Psr\Log\LoggerInterface;
+use Tests\TestCase;
 
-trait RegisterConsumerSetUp
+class RegisterConsumerSetUp extends TestCase
 {
+    use RefreshDatabase;
+
     protected $logger;
     protected RegisterConsumerAction $action;
     protected RegisterConsumerDTO $data;
 
-    protected function prepareScenario(): void
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->loggerSetUp();
         $this->actionSetUp();
         $this->dataSetUp();
