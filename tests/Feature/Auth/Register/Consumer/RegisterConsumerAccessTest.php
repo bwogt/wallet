@@ -19,6 +19,9 @@ class RegisterConsumerAccessTest extends RegisterConsumerTestSetUp
                 ]))
                 ->where('data.user.name', $data['name'])
                 ->where('data.user.email', $data['email'])
+                ->where('data.user.cpf', $data['cpf'])
+                ->has('data.user.created_at')
+                ->has('data.user.updated_at')
                 ->has('data.token')
                 ->missing('data.user.password')
             );
