@@ -28,9 +28,9 @@ jobs:
 
       - name: Run Pint
         run: |
-          ./vendor/bin/pint --test app/Actions \ 
-                                    app/Dto \    
-                                    app/Enum \ 
+          ./vendor/bin/pint --test app/Actions \
+                                    app/Dto \
+                                    app/Enum \
                                     app/Exceptions \
                                     app/Http \
                                     app/Models \
