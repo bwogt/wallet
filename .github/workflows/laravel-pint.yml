@@ -28,6 +28,13 @@ jobs:
 
       - name: Run Pint
         run: |
-          ./vendor/bin/pint --test app/Http/Controllers \
-                                     app/Models \
-                                     tests
+          ./vendor/bin/pint --test app/Actions \
+                                    app/Dto \
+                                    app/Enum \
+                                    app/Exceptions \
+                                    app/Http \
+                                    app/Models \
+                                    app/Rules \
+                                    database \
+                                    routes \
+                                    tests

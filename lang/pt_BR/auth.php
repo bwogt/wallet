@@ -16,5 +16,7 @@ return [
     'failed' => 'Essas credenciais não foram encontradas em nossos registros.',
     'password' => 'A senha informada está incorreta.',
     'throttle' => 'Muitas tentativas de login. Tente novamente em :seconds segundos.',
-
+    'register' => [
+        'failed' => 'Não foi possível registrar o usuário. Por favor, tente novamente mais tarde.',
+    ], 
 ];
