@@ -24,7 +24,7 @@ class RegisterMerchantSetUp extends TestCase
 
     protected function actionSetUp(): void
     {
-        $this->action = new RegisterMerchantAction();
+        $this->action = new RegisterMerchantAction;
     }
 
     protected function dataSetUp(): void

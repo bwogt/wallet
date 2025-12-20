@@ -2,8 +2,6 @@
 
 namespace App\Dto\Auth\Register;
 
-use App\Enum\User\UserType;
-
 class RegisterMerchantDTO implements RegisterUserDTOInterface
 {
     public function __construct(

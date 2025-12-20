@@ -24,7 +24,7 @@ class RegisterConsumerSetUp extends TestCase
 
     private function actionSetUp(): void
     {
-        $this->action = new RegisterConsumerAction();
+        $this->action = new RegisterConsumerAction;
     }
 
     private function dataSetUp(): void
