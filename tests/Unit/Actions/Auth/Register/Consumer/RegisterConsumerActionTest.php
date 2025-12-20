@@ -1,35 +1,23 @@
 <?php
 
-namespace Tests\Unit\Actions\Auth\Consumer;
+namespace Tests\Unit\Actions\Auth\Register\Consumer;
 
-use App\Actions\Auth\Consumer\RegisterConsumerAction;
 use App\Dto\Auth\Login\LoginDTO;
 use App\Enum\User\UserType;
-use App\Exceptions\HttpJsonResponseException;
 use Exception;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Mockery;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\TestCase;
 
-class RegisterConsumerActionTest extends TestCase
+class RegisterConsumerActionTest extends RegisterConsumerSetUp
 {
-    use RefreshDatabase, RegisterConsumerSetUp;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->prepareScenario();
-    }
-
     public function test_should_return_an_instance_of_login_dto_when_registration_is_successful(): void
     {
         $result = ($this->action)($this->data);
         $this->assertInstanceOf(LoginDTO::class, $result);
     }
 
-    public function test_should_create_a_new_user_in_the_database(): void
+    public function test_should_create_a_new_consumer_user_in_the_database(): void
     {
         $result = ($this->action)($this->data);
 
@@ -66,20 +54,18 @@ class RegisterConsumerActionTest extends TestCase
         $this->assertEquals(0, $result->user->wallet->balance);
     }
 
-    public function test_should_throw_an_exception_when_an_internal_server_error_occurs(): void
+    public function test_should_propagate_exception_when_database_transaction_fails(): void
     {
-        $this->expectException(HttpJsonResponseException::class);
-        $this->expectExceptionCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-        $this->expectExceptionMessage(trans('auth.register.failed'));
+        $message = 'Simulates a DB error';
 
-        $dbMock = Mockery::mock(\Illuminate\Database\DatabaseManager::class);
-        $dbMock->shouldReceive('transaction')
-            ->once()
-            ->andThrow(new Exception('Simulates a DB error',
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage($message);
+
+        DB::shouldReceive('transaction')->once()
+            ->andThrow(new Exception($message,
                 Response::HTTP_INTERNAL_SERVER_ERROR
             ));
 
-        $action = new RegisterConsumerAction($dbMock, $this->logger);
-        $action($this->data);
+        ($this->action)($this->data);
     }
 }

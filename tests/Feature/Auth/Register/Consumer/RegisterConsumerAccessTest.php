@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Auth\Register;
+namespace Tests\Feature\Auth\Register\Consumer;
 
 use App\Enum\FlashMessage\FlashMessageType;
 use Illuminate\Testing\Fluent\AssertableJson;
 
-class RegisterUserAccessTest extends RegisterUserTestSetUp
+class RegisterConsumerAccessTest extends RegisterConsumerTestSetUp
 {
     public function test_should_allow_unauthenticated_user_to_register(): void
     {
@@ -19,6 +19,9 @@ class RegisterUserAccessTest extends RegisterUserTestSetUp
                 ]))
                 ->where('data.user.name', $data['name'])
                 ->where('data.user.email', $data['email'])
+                ->where('data.user.cpf', $data['cpf'])
+                ->has('data.user.created_at')
+                ->has('data.user.updated_at')
                 ->has('data.token')
                 ->missing('data.user.password')
             );

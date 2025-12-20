@@ -53,4 +53,15 @@ class UserFactory extends Factory
             'cpf' => fake()->unique()->cpf(),
         ]);
     }
+
+    /**
+     * Indicate that the user is a merchant.
+     */
+    public function merchant(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => UserType::MERCHANT,
+            'cnpj' => fake()->unique()->cnpj(),
+        ]);
+    }
 }

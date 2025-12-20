@@ -25,6 +25,6 @@ abstract class ApiFormRequest extends FormRequest
      */
     public function flashMessage(): FlashMessage
     {
-        return FlashMessage::error(trans('flash_messages.errors'));
+        return FlashMessage::error(trans('flash_messages.errors.form_request'));
     }
 }

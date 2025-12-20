@@ -19,6 +19,10 @@ class UserBaseResource extends JsonResource
             'type' => $this->type,
             'name' => $this->name,
             'email' => $this->email,
+            'cpf' => $this->when($this->type->isConsumer(), $this->cpf),
+            'cnpj' => $this->when($this->type->isMerchant(), $this->cnpj),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
