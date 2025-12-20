@@ -6,7 +6,7 @@ use App\Dto\Auth\Register\RegisterUserDTOInterface;
 use App\Enum\User\UserType;
 use App\Models\User;
 
-class RegisterConsumerAction extends BaseRegisterUserAction
+class RegisterConsumerAction extends BaseRegisterUser
 {
     protected function createUser(RegisterUserDTOInterface $data): User
     {

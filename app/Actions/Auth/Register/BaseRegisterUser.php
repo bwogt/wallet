@@ -7,7 +7,7 @@ use App\Dto\Auth\Register\RegisterUserDTOInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-abstract class BaseRegisterUserAction
+abstract class BaseRegisterUser
 {
     public function __invoke(RegisterUserDTOInterface $data): LoginDTO
     {
