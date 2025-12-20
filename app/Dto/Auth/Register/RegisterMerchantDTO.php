@@ -32,9 +32,4 @@ class RegisterMerchantDTO implements RegisterUserDTOInterface
     {
         return $this->cnpj;
     }
-
-    public function getType(): string
-    {
-        return UserType::MERCHANT->value;
-    }
 }

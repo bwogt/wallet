@@ -8,5 +8,4 @@ interface RegisterUserDTOInterface
     public function getEmail(): string;
     public function getPassword(): string;
     public function getDocument(): string;
-    public function getType(): string;
 }

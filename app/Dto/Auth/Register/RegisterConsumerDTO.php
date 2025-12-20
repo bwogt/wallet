@@ -32,9 +32,4 @@ class RegisterConsumerDTO implements RegisterUserDTOInterface
     {
         return $this->cpf;
     }
-
-    public function getType(): string
-    {
-        return UserType::CONSUMER->value;
-    }
 }

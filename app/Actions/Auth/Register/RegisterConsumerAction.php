@@ -3,6 +3,7 @@
 namespace App\Actions\Auth\Register;
 
 use App\Dto\Auth\Register\RegisterUserDTOInterface;
+use App\Enum\User\UserType;
 use App\Models\User;
 
 class RegisterConsumerAction extends BaseRegisterUserAction
@@ -10,10 +11,10 @@ class RegisterConsumerAction extends BaseRegisterUserAction
     protected function createUser(RegisterUserDTOInterface $data): User
     {
         return User::create([
-            'type' => $data->getType(),
+            'type' => UserType::CONSUMER,
             'name' => $data->getName(),
             'email' => $data->getEmail(),
-            'password' => bcrypt($data->getPassword()),
+            'password' => $data->getPassword(),
             'cpf' => $data->getDocument(),
         ]);
     }
