@@ -2,13 +2,11 @@
 
 namespace Tests\Unit\Actions\Auth\Register\Consumer;
 
-use App\Actions\Auth\Register\RegisterConsumerAction;
 use App\Dto\Auth\Login\LoginDTO;
 use App\Enum\User\UserType;
-use App\Exceptions\HttpJsonResponseException;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Mockery;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterConsumerActionTest extends RegisterConsumerSetUp
@@ -56,20 +54,18 @@ class RegisterConsumerActionTest extends RegisterConsumerSetUp
         $this->assertEquals(0, $result->user->wallet->balance);
     }
 
-    public function test_should_throw_an_exception_when_an_internal_server_error_occurs(): void
+    public function test_should_propagate_exception_when_database_transaction_fails(): void
     {
-        $this->expectException(HttpJsonResponseException::class);
-        $this->expectExceptionCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-        $this->expectExceptionMessage(trans('auth.register.failed'));
+        $message = 'Simulates a DB error';
 
-        $dbMock = Mockery::mock(\Illuminate\Database\DatabaseManager::class);
-        $dbMock->shouldReceive('transaction')
-            ->once()
-            ->andThrow(new Exception('Simulates a DB error',
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage($message);
+
+        DB::shouldReceive('transaction')->once()
+            ->andThrow(new Exception($message,
                 Response::HTTP_INTERNAL_SERVER_ERROR
             ));
 
-        $action = new RegisterConsumerAction($dbMock, $this->logger);
-        $action($this->data);
+        ($this->action)($this->data);
     }
 }
