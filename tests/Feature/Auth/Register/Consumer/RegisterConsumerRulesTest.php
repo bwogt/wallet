@@ -14,7 +14,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.name.0', trans('validation.required', [
                         'attribute' => trans('validation.attributes.name'),
                     ]))
@@ -36,7 +36,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.name.0', trans('validation.max.string', [
                         'max' => 255,
                         'attribute' => trans('validation.attributes.name'),
@@ -50,7 +50,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.email.0', trans('validation.email', [
                         'attribute' => 'email',
                     ]))
@@ -63,7 +63,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.email.0', trans('validation.unique', [
                         'attribute' => 'email',
                     ]))
@@ -76,7 +76,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.cpf.0', trans('validation.unique', [
                         'attribute' => 'cpf',
                     ]))
@@ -94,7 +94,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.password.0', trans('validation.min.string', [
                         'attribute' => trans('validation.attributes.password'),
                         'min' => 8,
@@ -113,7 +113,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.password.0', trans('validation.max.string', [
                         'attribute' => trans('validation.attributes.password'),
                         'max' => 255,
@@ -127,7 +127,7 @@ class RegisterConsumerRulesTest extends RegisterConsumerTestSetUp
             ->assertUnprocessable()
             ->assertJson(
                 fn (AssertableJson $json) => $json->where('message.type', FlashMessageType::ERROR)
-                    ->where('message.text', trans('flash_messages.errors'))
+                    ->where('message.text', trans('flash_messages.errors.form_request'))
                     ->where('errors.password.0', trans('validation.confirmed', [
                         'attribute' => trans('validation.attributes.password'),
                     ]))

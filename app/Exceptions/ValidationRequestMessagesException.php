@@ -16,7 +16,7 @@ class ValidationRequestMessagesException extends ValidationException
     public function __construct($validator, $response = null, $errorBag = 'default')
     {
         parent::__construct($validator, $response, $errorBag);
-        $this->flashMessage = FlashMessage::error(trans('flash_messages.errors'));
+        $this->flashMessage = FlashMessage::error(trans('flash_messages.errors.form_request'));
     }
 
     /**
