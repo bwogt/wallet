@@ -26,6 +26,16 @@ class AuthController extends Controller
         );
     }
 
+    public function logout(): JsonResponse
+    {
+        request()->user()->tokens()->delete();
+
+        return response()->json(
+            FlashMessage::success(trans('flash_messages.success.logout')),
+            Response::HTTP_OK
+        );
+    }
+
     public function registerConsumer(RegisterConsumerRequest $request, RegisterConsumerAction $action): JsonResponse
     {
         $loginDTO = $action($request->toDTO());
