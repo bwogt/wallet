@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Messages\FlashMessage;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -20,14 +20,17 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(fn ($request) => $request->is('api/*'));
 
+        $exceptions->render(function (AuthenticationException $e) {
+            return response()->json(
+                FlashMessage::error($e->getMessage()),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        });
+
         $exceptions->render(function (HttpException $e) {
             $status = $e->getStatusCode();
 
             return match ($status) {
-                Response::HTTP_UNAUTHORIZED => response()->json(
-                    FlashMessage::error(trans('http_exceptions.unauthenticated')),
-                    $status
-                ),
                 Response::HTTP_FORBIDDEN => response()->json(
                     FlashMessage::error(trans('http_exceptions.unauthorized')),
                     $status
