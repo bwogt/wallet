@@ -3,7 +3,7 @@
 namespace App\Actions\Validator;
 
 use App\Dto\Auth\Login\CredentialDTO;
-use App\Exceptions\User\InvalidCredentialsException;
+use App\Exceptions\InvalidCredentialsException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,5 +26,7 @@ class AuthValidator
 
         throw_unless($emailMatch && $passwordMatch,
             new InvalidCredentialsException(trans('exceptions.invalid_credentials')));
+
+        return $this;
     }
 }
