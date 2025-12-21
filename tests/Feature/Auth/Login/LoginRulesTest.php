@@ -3,8 +3,8 @@
 namespace Tests\Feature\Auth\Login;
 
 use App\Enum\FlashMessage\FlashMessageType;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Support\Str;
+use Illuminate\Testing\Fluent\AssertableJson;
 
 class LoginRulesTest extends LoginTestSetUp
 {
