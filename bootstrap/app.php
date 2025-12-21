@@ -45,8 +45,21 @@ return Application::configure(basePath: dirname(__DIR__))
 
         });
 
+        $exceptions->render(function (DomainException $e, $request) {
+            if ($request->is('api/*') || $request->wantsJson()) {
+                return response()->json(
+                    FlashMessage::error($e->getMessage()),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            return null;
+        });
+
         $exceptions->render(function (Throwable $e, $request) {
-            Log::error($e);
+            if (app()->hasDebugModeEnabled()) {
+                return null;
+            }
 
             if (($request->is('api/*') || $request->wantsJson())) {
                 return response()->json(
