@@ -4,8 +4,10 @@ namespace Tests\Unit\Actions\Transfer;
 
 use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
+use App\Exceptions\InvalidPayerTypeException;
 use App\Exceptions\UserNotFoundException;
 use App\Models\Transaction;
+use Database\Factories\UserFactory;
 
 class TransferActionTest extends TransferActionTestSetUp
 {
@@ -91,6 +93,22 @@ class TransferActionTest extends TransferActionTestSetUp
         $transferDto = $this->createTransferDTO(
             payerId: $this->payer->id,
             payeeId: 0,
+            value: 50.25
+        );
+
+        ($this->action)($transferDto);
+    }
+
+    public function test_should_throw_an_exception_when_the_user_payer_is_merchant(): void
+    {
+        $this->expectException(InvalidPayerTypeException::class);
+        $this->expectExceptionMessage(trans('exceptions.transfer_payer_must_be_consumer'));
+
+        $payer = UserFactory::new()->merchant()->create();
+
+        $transferDto = $this->createTransferDTO(
+            payerId: $payer->id,
+            payeeId: $this->payee->id,
             value: 50.25
         );
 

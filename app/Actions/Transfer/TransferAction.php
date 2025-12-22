@@ -2,6 +2,7 @@
 
 namespace App\Actions\Transfer;
 
+use App\Actions\Validator\TransferPayerValidator;
 use App\Actions\Validator\UserValidator;
 use App\Dto\Transaction\Transfer\TransferDTO;
 use App\Enum\Transaction\TransactionStatus;
@@ -40,6 +41,8 @@ class TransferAction
     {
         UserValidator::for($payer)->userMustExist();
         UserValidator::for($payee)->userMustExist();
+
+        TransferPayerValidator::for($payer)->mustBeConsumer();
     }
 
     private function createTransaction(TransferDTO $data): Transaction
