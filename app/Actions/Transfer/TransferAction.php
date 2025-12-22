@@ -43,7 +43,9 @@ class TransferAction
         UserValidator::for($payer)->userMustExist();
         UserValidator::for($payee)->userMustExist();
 
-        TransferPayerValidator::for($payer)->mustBeConsumer();
+        TransferPayerValidator::for($payer)
+            ->mustBeConsumer()
+            ->mustNotTransferYourSelf($payee);
 
         TransferLimitsValidator::check($data->value)
             ->valueMustBeAboveMinimum()

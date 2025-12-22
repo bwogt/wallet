@@ -7,6 +7,7 @@ use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
 use App\Exceptions\InvalidPayerTypeException;
 use App\Exceptions\InvalidTransferValueException;
+use App\Exceptions\SelfTransferException;
 use App\Exceptions\UserNotFoundException;
 use App\Models\Transaction;
 use Database\Factories\UserFactory;
@@ -149,4 +150,17 @@ class TransferActionTest extends TransferActionTestSetUp
         ($this->action)($transferDto);
     }
 
+    public function test_should_throw_an_exception_when_the_payer_attempts_transfer_to_yourself(): void
+    {
+        $this->expectException(SelfTransferException::class);
+        $this->expectExceptionMessage(trans('exceptions.transfer_cannot_send_to_self'));
+
+        $transferDto = $this->createTransferDTO(
+            payerId: $this->payer->id,
+            payeeId: $this->payer->id,
+            value: 120,
+        );
+
+        ($this->action)($transferDto);
+    }
 }
