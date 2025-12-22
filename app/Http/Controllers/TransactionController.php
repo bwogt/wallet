@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Consumer\DepositAction;
+use App\Actions\Deposit\DepositAction;
 use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Deposit\DepositRequest;
 use Illuminate\Http\JsonResponse;

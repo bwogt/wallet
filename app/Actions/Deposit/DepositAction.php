@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Consumer;
+namespace App\Actions\Deposit;
 
 use App\Actions\Validator\DepositLimitsValidator;
 use App\Actions\Validator\UserValidator;

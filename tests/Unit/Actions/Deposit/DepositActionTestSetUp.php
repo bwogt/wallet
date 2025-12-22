@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Actions\Deposit;
 
-use App\Actions\Consumer\DepositAction;
+use App\Actions\Deposit\DepositAction;
 use App\Constants\Deposit\DepositConstants;
 use App\Dto\Auth\Transaction\DepositDTO;
 use App\Models\User;
