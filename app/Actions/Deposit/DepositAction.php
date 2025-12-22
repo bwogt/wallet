@@ -32,9 +32,9 @@ class DepositAction
     {
         UserValidator::for($user)->userMustExist();
 
-        DepositLimitsValidator::check($data->amount)
-            ->amountMustBeAboveMinimum()
-            ->amountMustBeLessThanMaximum();
+        DepositLimitsValidator::check($data->value)
+            ->valueMustBeAboveMinimum()
+            ->valueMustBeLessThanMaximum();
     }
 
     private function searchUserById(int $id): ?User
@@ -49,13 +49,13 @@ class DepositAction
             'status' => TransactionStatus::COMPLETED,
             'payer_id' => $data->user_id,
             'payee_id' => $data->user_id,
-            'amount' => $data->amount,
+            'value' => $data->value,
         ]);
     }
 
     private function addBalanceToWallet(User $user, DepositDTO $data): void
     {
-        $user->wallet()->increment('balance', $data->amount);
+        $user->wallet()->increment('balance', $data->value);
     }
 
     private function logSuccess(Transaction $transaction): void
@@ -64,7 +64,7 @@ class DepositAction
             'transaction_id' => $transaction->id,
             'status' => $transaction->status,
             'payer_id' => $transaction->payer_id,
-            'amount' => $transaction->amount,
+            'value' => $transaction->value,
         ]);
     }
 }

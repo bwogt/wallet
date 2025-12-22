@@ -24,11 +24,11 @@ class DepositActionTestSetUp extends TestCase
         $this->action = new DepositAction;
     }
 
-    protected function depositData(?int $userId = null, ?float $amount = null): DepositDTO
+    protected function depositData(?int $userId = null, ?float $value = null): DepositDTO
     {
         return new DepositDTO(
             user_id: $userId ?? $this->user->id,
-            amount: $amount ?? DepositConstants::MIN_AMOUNT
+            value: $value ?? DepositConstants::MIN_VALUE
         );
     }
 }

@@ -19,7 +19,7 @@ class Transaction extends Model
         'status',
         'payer_id',
         'payee_id',
-        'amount',
+        'value',
     ];
 
     /**

@@ -22,7 +22,7 @@ class DepositRequest extends FormRequest
     {
         return new DepositDTO(
             user_id: $this->user()->id,
-            amount: $this->amount
+            value: $this->value
         );
     }
 
@@ -34,7 +34,7 @@ class DepositRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => ['required', 'numeric'],
+            'value' => ['required', 'numeric'],
         ];
     }
 }

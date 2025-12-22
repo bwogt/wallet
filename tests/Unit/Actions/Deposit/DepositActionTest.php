@@ -30,7 +30,7 @@ class DepositActionTest extends DepositActionTestSetUp
             'status' => TransactionStatus::COMPLETED,
             'payer_id' => $this->depositData()->user_id,
             'payee_id' => $this->depositData()->user_id,
-            'amount' => $this->depositData()->amount,
+            'value' => $this->depositData()->value,
         ]);
     }
 
@@ -38,31 +38,31 @@ class DepositActionTest extends DepositActionTestSetUp
     {
         $this->assertEquals('0.00', $this->user->wallet->balance);
 
-        ($this->action)($this->depositData(amount: 12.75));
+        ($this->action)($this->depositData(value: 12.75));
         $this->assertEquals(12.75, $this->user->fresh()->wallet->balance);
 
-        ($this->action)($this->depositData(amount: 250.93));
+        ($this->action)($this->depositData(value: 250.93));
         $this->assertEquals(263.68, $this->user->fresh()->wallet->balance);
     }
 
-    public function test_should_possible_to_deposit_the_minimum_amount(): void
+    public function test_should_possible_to_deposit_the_minimum_value(): void
     {
-        $deposit = ($this->action)($this->depositData(amount: DepositConstants::MIN_AMOUNT));
+        $deposit = ($this->action)($this->depositData(value: DepositConstants::MIN_VALUE));
 
         $this->assertDatabaseHas('transactions', [
             'id' => $deposit->id,
-            'amount' => DepositConstants::MIN_AMOUNT,
+            'value' => DepositConstants::MIN_VALUE,
             'status' => TransactionStatus::COMPLETED,
         ]);
     }
 
-    public function test_should_possible_to_deposit_the_max_amount(): void
+    public function test_should_possible_to_deposit_the_maximum_value(): void
     {
-        $deposit = ($this->action)($this->depositData(amount: DepositConstants::MAX_AMOUNT));
+        $deposit = ($this->action)($this->depositData(value: DepositConstants::MAX_VALUE));
 
         $this->assertDatabaseHas('transactions', [
             'id' => $deposit->id,
-            'amount' => DepositConstants::MAX_AMOUNT,
+            'value' => DepositConstants::MAX_VALUE,
             'status' => TransactionStatus::COMPLETED,
         ]);
     }
@@ -75,26 +75,26 @@ class DepositActionTest extends DepositActionTestSetUp
         ($this->action)($this->depositData(userId: '0'));
     }
 
-    public function test_should_throw_an_exception_when_amount_is_less_than_the_minimum(): void
+    public function test_should_throw_an_exception_when_value_is_less_than_the_minimum(): void
     {
         $this->expectException(InvalidDepositAmountException::class);
-        $this->expectExceptionMessage(trans('exceptions.deposit_amount_below_minimum', [
-            'minimum' => DepositConstants::MIN_AMOUNT,
+        $this->expectExceptionMessage(trans('exceptions.deposit_value_below_minimum', [
+            'minimum' => DepositConstants::MIN_VALUE,
         ]));
 
-        $amount = bcsub(DepositConstants::MIN_AMOUNT, '0.1', 2);
-        ($this->action)($this->depositData(amount: $amount));
+        $value = bcsub(DepositConstants::MIN_VALUE, '0.1', 2);
+        ($this->action)($this->depositData(value: $value));
     }
 
-    public function test_should_throw_an_exception_when_amount_is_greater_than_the_maximum(): void
+    public function test_should_throw_an_exception_when_value_is_greater_than_the_maximum(): void
     {
         $this->expectException(InvalidDepositAmountException::class);
-        $this->expectExceptionMessage(trans('exceptions.deposit_amount_above_maximum', [
-            'maximum' => DepositConstants::MAX_AMOUNT,
+        $this->expectExceptionMessage(trans('exceptions.deposit_value_above_maximum', [
+            'maximum' => DepositConstants::MAX_VALUE,
         ]));
 
-        $amount = bcadd(DepositConstants::MAX_AMOUNT, '0.1', 2);
-        ($this->action)($this->depositData(amount: $amount));
+        $value = bcadd(DepositConstants::MAX_VALUE, '0.1', 2);
+        ($this->action)($this->depositData(value: $value));
     }
 
     public function test_should_propagate_exception_when_database_transaction_fails(): void

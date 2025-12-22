@@ -8,34 +8,34 @@ use App\Exceptions\InvalidDepositAmountException;
 class DepositLimitsValidator
 {
     public function __construct(
-        private readonly float $amount
+        private readonly float $value
     ) {}
 
-    public static function check(float $amount): self
+    public static function check(float $value): self
     {
-        return new self($amount);
+        return new self($value);
     }
 
-    public function amountMustBeAboveMinimum(): self
+    public function valueMustBeAboveMinimum(): self
     {
-        $isInvalidAmount = $this->amount < DepositConstants::MIN_AMOUNT;
+        $isInvalidValue = $this->value < DepositConstants::MIN_VALUE;
 
-        throw_if($isInvalidAmount, new InvalidDepositAmountException(
-            trans('exceptions.deposit_amount_below_minimum', [
-                'minimum' => DepositConstants::MIN_AMOUNT,
+        throw_if($isInvalidValue, new InvalidDepositAmountException(
+            trans('exceptions.deposit_value_below_minimum', [
+                'minimum' => DepositConstants::MIN_VALUE,
             ])
         ));
 
         return $this;
     }
 
-    public function amountMustBeLessThanMaximum(): self
+    public function valueMustBeLessThanMaximum(): self
     {
-        $isInvalidAmount = $this->amount > DepositConstants::MAX_AMOUNT;
+        $isInvalidValue= $this->value > DepositConstants::MAX_VALUE;
 
-        throw_if($isInvalidAmount, new InvalidDepositAmountException(
-            trans('exceptions.deposit_amount_above_maximum', [
-                'maximum' => DepositConstants::MAX_AMOUNT,
+        throw_if($isInvalidValue, new InvalidDepositAmountException(
+            trans('exceptions.deposit_value_above_maximum', [
+                'maximum' => DepositConstants::MAX_VALUE,
             ])
         ));
 
