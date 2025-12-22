@@ -2,6 +2,7 @@
 
 namespace App\Actions\Validator;
 
+use App\Exceptions\InsufficientFundsException;
 use App\Exceptions\InvalidPayerTypeException;
 use App\Exceptions\SelfTransferException;
 use App\Models\User;
@@ -29,6 +30,17 @@ class TransferPayerValidator
 
         throw_if($isSameUser, new SelfTransferException(
             trans('exceptions.transfer_cannot_send_to_self')
+        ));
+
+        return $this;
+    }
+
+    public function mustHaveSufficientFunds(float $value): self
+    {
+        $hasSufficientBalance = $this->payer->wallet->balance >= $value;
+
+        throw_unless($hasSufficientBalance, new InsufficientFundsException(
+            trans('exceptions.transfer_insufficient_funds')
         ));
 
         return $this;

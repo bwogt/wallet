@@ -5,6 +5,7 @@ namespace Tests\Unit\Actions\Transfer;
 use App\Constants\Transfer\TransferConstants;
 use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
+use App\Exceptions\InsufficientFundsException;
 use App\Exceptions\InvalidPayerTypeException;
 use App\Exceptions\InvalidTransferValueException;
 use App\Exceptions\SelfTransferException;
@@ -141,8 +142,13 @@ class TransferActionTest extends TransferActionTestSetUp
             'maximum' => TransferConstants::MAX_VALUE,
         ]));
 
+        $payer = UserFactory::new()
+            ->consumer()
+            ->withWalletBalance(TransferConstants::MAX_VALUE + 1)
+            ->create();
+
         $transferDto = $this->createTransferDTO(
-            payerId: $this->payer->id,
+            payerId: $payer->id,
             payeeId: $this->payee->id,
             value: bcadd(TransferConstants::MAX_VALUE, '0.1', 2),
         );
@@ -159,6 +165,20 @@ class TransferActionTest extends TransferActionTestSetUp
             payerId: $this->payer->id,
             payeeId: $this->payer->id,
             value: 120,
+        );
+
+        ($this->action)($transferDto);
+    }
+
+    public function test_should_throw_an_exception_when_the_payer_does_not_have_sufficient_funds(): void
+    {
+        $this->expectException(InsufficientFundsException::class);
+        $this->expectExceptionMessage(trans('exceptions.transfer_insufficient_funds'));
+
+        $transferDto = $this->createTransferDTO(
+            payerId: $this->payer->id,
+            payeeId: $this->payee->id,
+            value: $this->payer->wallet->balance + 0.01,
         );
 
         ($this->action)($transferDto);

@@ -45,7 +45,8 @@ class TransferAction
 
         TransferPayerValidator::for($payer)
             ->mustBeConsumer()
-            ->mustNotTransferYourSelf($payee);
+            ->mustNotTransferYourSelf($payee)
+            ->mustHaveSufficientFunds($data->value);
 
         TransferLimitsValidator::check($data->value)
             ->valueMustBeAboveMinimum()
