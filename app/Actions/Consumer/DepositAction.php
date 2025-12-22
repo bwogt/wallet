@@ -28,7 +28,7 @@ class DepositAction
         });
     }
 
-    private function validateDepositRules(User $user, DepositDTO $data): void
+    private function validateDepositRules(?User $user, DepositDTO $data): void
     {
         UserValidator::for($user)->userMustExist();
 

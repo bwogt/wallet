@@ -21,7 +21,7 @@ class DepositLimitsValidator
         $isInvalidAmount = $this->amount < DepositConstants::MIN_AMOUNT;
 
         throw_if($isInvalidAmount, new InvalidDepositAmountException(
-            trans('deposit_amount_below_minimum', [
+            trans('exceptions.deposit_amount_below_minimum', [
                 'minimum' => DepositConstants::MIN_AMOUNT,
             ])
         ));
@@ -34,7 +34,7 @@ class DepositLimitsValidator
         $isInvalidAmount = $this->amount > DepositConstants::MAX_AMOUNT;
 
         throw_if($isInvalidAmount, new InvalidDepositAmountException(
-            trans('deposit_amount_above_maximum', [
+            trans('exceptions.deposit_amount_above_maximum', [
                 'maximum' => DepositConstants::MAX_AMOUNT,
             ])
         ));
