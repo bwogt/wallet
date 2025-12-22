@@ -4,7 +4,7 @@ namespace Tests\Unit\Actions\Deposit;
 
 use App\Actions\Deposit\DepositAction;
 use App\Constants\Deposit\DepositConstants;
-use App\Dto\Auth\Transaction\DepositDTO;
+use App\Dto\Transaction\DepositDTO;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
