@@ -31,7 +31,7 @@ class DepositLimitsValidator
 
     public function valueMustBeLessThanMaximum(): self
     {
-        $isInvalidValue= $this->value > DepositConstants::MAX_VALUE;
+        $isInvalidValue = $this->value > DepositConstants::MAX_VALUE;
 
         throw_if($isInvalidValue, new InvalidDepositAmountException(
             trans('exceptions.deposit_value_above_maximum', [
