@@ -2,6 +2,7 @@
 
 namespace App\Actions\Transfer;
 
+use App\Actions\Validator\UserValidator;
 use App\Dto\Transaction\Transfer\TransferDTO;
 use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
@@ -18,6 +19,8 @@ class TransferAction
             $payer = $this->searchUserById($data->payer_id);
             $payee = $this->searchUserById($data->payee_id);
 
+            $this->validationTransferRules($payer, $payee);
+
             $transaction = $this->createTransaction($data);
             $this->decrementPayerBalance($transaction, $data);
             $this->incrementPayeeBalance($transaction, $data);
@@ -31,6 +34,12 @@ class TransferAction
     private function searchUserById(int $id): ?User
     {
         return User::where('id', $id)->lockForUpdate()->first();
+    }
+
+    private function validationTransferRules(?User $payer, ?User $payee): void
+    {
+        UserValidator::for($payer)->userMustExist();
+        UserValidator::for($payee)->userMustExist();
     }
 
     private function createTransaction(TransferDTO $data): Transaction

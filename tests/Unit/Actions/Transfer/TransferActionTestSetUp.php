@@ -43,11 +43,11 @@ class TransferActionTestSetUp extends TestCase
         $this->action = new TransferAction;
     }
 
-    protected function createTransferDTO(User $payer, User $payee, float $value): TransferDTO
+    protected function createTransferDTO(int $payerId, int $payeeId, float $value): TransferDTO
     {
         return new TransferDTO(
-            payer_id: $payer->id,
-            payee_id: $payee->id,
+            payer_id: $payerId,
+            payee_id: $payeeId,
             value: $value
         );
     }
