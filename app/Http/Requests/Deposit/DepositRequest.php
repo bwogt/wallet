@@ -3,9 +3,9 @@
 namespace App\Http\Requests\Deposit;
 
 use App\Dto\Auth\Transaction\DepositDTO;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Base\ApiFormRequest;
 
-class DepositRequest extends FormRequest
+class DepositRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
