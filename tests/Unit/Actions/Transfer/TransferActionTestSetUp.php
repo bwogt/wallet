@@ -2,11 +2,12 @@
 
 namespace Tests\Unit\Actions\Transfer;
 
-use App\Actions\Transfer\TransferAction;
 use App\Dto\Transaction\Transfer\TransferDTO;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class TransferActionTestSetUp extends TestCase
@@ -15,14 +16,11 @@ class TransferActionTestSetUp extends TestCase
 
     protected User $payer;
     protected User $payee;
-    protected TransferAction $action;
 
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->userSetUp();
-        $this->actionSetUp();
     }
 
     private function userSetUp(): void
@@ -38,11 +36,6 @@ class TransferActionTestSetUp extends TestCase
             ->create();
     }
 
-    private function actionSetUp(): void
-    {
-        $this->action = new TransferAction;
-    }
-
     protected function createTransferDTO(int $payerId, int $payeeId, float $value): TransferDTO
     {
         return new TransferDTO(
@@ -50,5 +43,19 @@ class TransferActionTestSetUp extends TestCase
             payee_id: $payeeId,
             value: $value
         );
+    }
+
+    protected function authorizeTransfers(): void
+    {
+        Http::fake(fn () => Http::response([
+            'data' => ['authorization' => true],
+        ], Response::HTTP_OK));
+    }
+
+    protected function denyTransfers(): void
+    {
+        Http::fake(fn () => Http::response([
+            'data' => ['authorization' => false],
+        ], Response::HTTP_OK));
     }
 }

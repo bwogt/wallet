@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 class TransferAction
 {
+    public function __construct(private AuthorizeTransferAction $authorizeTransfer) {}
     public function __invoke(TransferDTO $data): Transaction
     {
         return DB::transaction(function () use ($data) {
@@ -22,6 +23,8 @@ class TransferAction
             $payee = $this->searchUserById($data->payee_id);
 
             $this->validationTransferRules($payer, $payee, $data);
+
+            ($this->authorizeTransfer)();
 
             $transaction = $this->createTransaction($data);
             $this->decrementPayerBalance($transaction, $data);
