@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use DomainException;
 
-class InvalidTransferValueException extends Exception
+class InvalidTransferValueException extends DomainException
 {
     public function __construct(
         ?string $message = 'Invalid transfer value.',

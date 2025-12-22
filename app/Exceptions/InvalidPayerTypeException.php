@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use DomainException;
 
-class InvalidPayerTypeException extends Exception
+class InvalidPayerTypeException extends DomainException
 {
     public function __construct(
         ?string $message = 'Invalid payer type.',

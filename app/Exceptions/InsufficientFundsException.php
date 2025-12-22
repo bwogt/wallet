@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use DomainException;
 
-class InsufficientFundsException extends Exception
+class InsufficientFundsException extends DomainException
 {
     public function __construct(
         ?string $message = 'User does not have the necessary funds',

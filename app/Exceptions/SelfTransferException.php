@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use DomainException;
 
-class SelfTransferException extends Exception
+class SelfTransferException extends DomainException
 {
     public function __construct(
         ?string $message = 'users cannot transfer money to themselves',
