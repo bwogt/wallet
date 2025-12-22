@@ -22,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (AuthenticationException $e) {
             return response()->json(
-                FlashMessage::error($e->getMessage()),
+                FlashMessage::error(trans('http_exceptions.unauthorized')),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         });
