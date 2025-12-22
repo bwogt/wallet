@@ -75,4 +75,14 @@ class UserFactory extends Factory
             'cnpj' => fake()->unique()->cnpj(),
         ]);
     }
+
+    /**
+     * Indicate that the user has a wallet with the specified balance.
+     */
+    public function withWalletBalance(float $balance): static
+    {
+        return $this->afterCreating(function (User $user) use ($balance) {
+            $user->wallet()->increment('balance', $balance);
+        });
+    }
 }
