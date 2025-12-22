@@ -2,6 +2,7 @@
 
 namespace App\Actions\Transfer;
 
+use App\Actions\Validator\TransferLimitsValidator;
 use App\Actions\Validator\TransferPayerValidator;
 use App\Actions\Validator\UserValidator;
 use App\Dto\Transaction\Transfer\TransferDTO;
@@ -20,7 +21,7 @@ class TransferAction
             $payer = $this->searchUserById($data->payer_id);
             $payee = $this->searchUserById($data->payee_id);
 
-            $this->validationTransferRules($payer, $payee);
+            $this->validationTransferRules($payer, $payee, $data);
 
             $transaction = $this->createTransaction($data);
             $this->decrementPayerBalance($transaction, $data);
@@ -37,12 +38,16 @@ class TransferAction
         return User::where('id', $id)->lockForUpdate()->first();
     }
 
-    private function validationTransferRules(?User $payer, ?User $payee): void
+    private function validationTransferRules(?User $payer, ?User $payee, TransferDTO $data): void
     {
         UserValidator::for($payer)->userMustExist();
         UserValidator::for($payee)->userMustExist();
 
         TransferPayerValidator::for($payer)->mustBeConsumer();
+
+        TransferLimitsValidator::check($data->value)
+            ->valueMustBeAboveMinimum()
+            ->valueMustBeLessThanMaximum();
     }
 
     private function createTransaction(TransferDTO $data): Transaction

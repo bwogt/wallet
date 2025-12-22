@@ -6,4 +6,6 @@ return [
     'deposit_value_below_minimum' => 'O valor do depósito deve ser igual ou maior que R$:minimum',
     'deposit_value_above_maximum' => 'O valor do depósito deve ser menor ou igual a R$:maximum',
     'transfer_payer_must_be_consumer' => 'Somente usuários consumidores podem realizar transferências.',
+    'transfer_value_below_minimum' => 'O valor da transferência deve ser igual ou maior que R$:minimum',
+    'transfer_value_above_maximum' => 'O valor da transferência deve ser menor ou igual a R$:maximum',
 ];

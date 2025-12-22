@@ -2,9 +2,11 @@
 
 namespace Tests\Unit\Actions\Transfer;
 
+use App\Constants\Transfer\TransferConstants;
 use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
 use App\Exceptions\InvalidPayerTypeException;
+use App\Exceptions\InvalidTransferValueException;
 use App\Exceptions\UserNotFoundException;
 use App\Models\Transaction;
 use Database\Factories\UserFactory;
@@ -114,4 +116,37 @@ class TransferActionTest extends TransferActionTestSetUp
 
         ($this->action)($transferDto);
     }
+
+    public function test_should_throw_an_exception_when_value_is_less_than_the_minimum(): void
+    {
+        $this->expectException(InvalidTransferValueException::class);
+        $this->expectExceptionMessage(trans('exceptions.transfer_value_below_minimum', [
+            'minimum' => TransferConstants::MIN_VALUE,
+        ]));
+
+        $transferDto = $this->createTransferDTO(
+            payerId: $this->payer->id,
+            payeeId: $this->payee->id,
+            value: bcsub(TransferConstants::MIN_VALUE, '0.1', 2)
+        );
+
+        ($this->action)($transferDto);
+    }
+
+    public function test_should_throw_an_exception_when_value_is_greater_than_the_maximum(): void
+    {
+        $this->expectException(InvalidTransferValueException::class);
+        $this->expectExceptionMessage(trans('exceptions.transfer_value_above_maximum', [
+            'maximum' => TransferConstants::MAX_VALUE,
+        ]));
+
+        $transferDto = $this->createTransferDTO(
+            payerId: $this->payer->id,
+            payeeId: $this->payee->id,
+            value: bcadd(TransferConstants::MAX_VALUE, '0.1', 2),
+        );
+
+        ($this->action)($transferDto);
+    }
+
 }
