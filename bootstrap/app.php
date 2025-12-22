@@ -22,8 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (AuthenticationException $e) {
             return response()->json(
-                FlashMessage::error($e->getMessage()),
-                Response::HTTP_UNPROCESSABLE_ENTITY
+                FlashMessage::error(trans('http_exceptions.unauthenticated')),
+                Response::HTTP_UNAUTHORIZED
             );
         });
 

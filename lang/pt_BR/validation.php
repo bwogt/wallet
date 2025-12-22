@@ -243,6 +243,7 @@ return [
         'category' => 'categoria',
         'blood_type' => 'tipo sanguíneo',
         'birth_date' => 'data de nascimento',
+        'value' => 'valor',
     ],
 
 ];

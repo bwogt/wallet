@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/consumer.php';
@@ -22,5 +23,10 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
             Route::post('logout', 'logout')->name('logout');
         });
+
+        Route::controller(TransactionController::class)->prefix('transactions')
+            ->name('transactions.')->group(function () {
+                Route::post('deposit', 'deposit')->name('deposit');
+            });
     });
 });
