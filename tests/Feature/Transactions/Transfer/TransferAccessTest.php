@@ -40,6 +40,18 @@ class TransferAccessTest extends TransferTestSetUp
                 ->where('data.value', fn ($value) => (float) $value === (float) TransferConstants::MIN_VALUE)
                 ->has('data.created_at')
                 ->has('data.updated_at')
+
+                ->has('data.payer')
+                ->where('data.payer.id', $this->payer->id)
+                ->where('data.payer.name', $this->payer->name)
+                ->where('data.payer.email', $this->payer->email)
+                ->where('data.payer.cpf', $this->payer->cpf)
+
+                ->has('data.payee')
+                ->where('data.payee.id', $this->payee->id)
+                ->where('data.payee.name', $this->payee->name)
+                ->where('data.payee.email', $this->payee->email)
+                ->where('data.payee.cpf', $this->payee->cpf)
             );
     }
 

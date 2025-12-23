@@ -8,16 +8,18 @@ use App\Http\Messages\FlashMessage;
 use App\Http\Requests\Deposit\DepositRequest;
 use App\Http\Requests\Transfer\TransferRequest;
 use App\Http\Resources\Transaction\TransactionResource;
+use App\Http\Resources\Transaction\Transfer\TransferResource;
 use Illuminate\Http\JsonResponse;
 
 class TransactionController extends Controller
 {
     public function deposit(DepositRequest $request, DepositAction $action): JsonResponse
     {
-        $action($request->toDTO());
+        $transaction = $action($request->toDTO());
 
         return response()->json(
-            FlashMessage::success(trans('flash_messages.success.deposit')),
+            FlashMessage::success(trans('flash_messages.success.deposit'))
+                ->merge(['data' => TransactionResource::make($transaction)]),
             JsonResponse::HTTP_CREATED
         );
     }
@@ -28,7 +30,7 @@ class TransactionController extends Controller
 
         return response()->json(
             FlashMessage::success(trans('flash_messages.success.transfer'))
-                ->merge(['data' => TransactionResource::make($transaction)]),
+                ->merge(['data' => TransferResource::make($transaction)]),
             JsonResponse::HTTP_CREATED
         );
     }
