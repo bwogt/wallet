@@ -29,7 +29,7 @@ return [
         /*
          * Description rendered on the home page of the API documentation (`/docs/api`).
          */
-        'description' => 'API para simular um carteira digital que permite transferências entre usuários comuns e lojistas.',
+        'description' => 'API para simular uma carteira digital que permite transferências entre usuários comuns e lojistas.',
     ],
 
     /*
