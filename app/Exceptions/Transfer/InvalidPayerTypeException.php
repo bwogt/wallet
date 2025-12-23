@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Transfer;
 
 use DomainException;
 
-class TransferUnauthorizedException extends DomainException
+class InvalidPayerTypeException extends DomainException
 {
     public function __construct(
-        ?string $message = 'Transfer unauthorized.',
+        ?string $message = 'Invalid payer type.',
         int $code = 0,
         ?\Throwable $previous = null
     ) {

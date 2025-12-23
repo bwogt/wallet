@@ -3,7 +3,7 @@
 namespace App\Actions\Validator;
 
 use App\Constants\Transfer\TransferConstants;
-use App\Exceptions\InvalidTransferValueException;
+use App\Exceptions\Transfer\InvalidTransferValueException;
 
 class TransferLimitsValidator
 {

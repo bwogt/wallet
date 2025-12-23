@@ -2,7 +2,7 @@
 
 namespace App\Actions\Transfer;
 
-use App\Exceptions\TransferUnauthorizedException;
+use App\Exceptions\Transfer\TransferUnauthorizedException;
 use Illuminate\Support\Facades\Http;
 
 class AuthorizeTransferAction

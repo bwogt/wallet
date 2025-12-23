@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Base;
 
-use App\Exceptions\ValidationRequestMessagesException;
+use App\Exceptions\Validation\ValidationRequestMessagesException;
 use App\Http\Messages\FlashMessage;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;

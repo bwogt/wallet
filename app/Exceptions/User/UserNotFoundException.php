@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\User;
 
 use DomainException;
 
-class SelfTransferException extends DomainException
+class UserNotFoundException extends DomainException
 {
     public function __construct(
-        ?string $message = 'users cannot transfer money to themselves',
+        ?string $message = 'Invalid deposit amount.',
         int $code = 0,
         ?\Throwable $previous = null
     ) {

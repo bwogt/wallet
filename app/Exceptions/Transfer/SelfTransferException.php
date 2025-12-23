@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Transfer;
 
 use DomainException;
 
-class InvalidCredentialsException extends DomainException
+class SelfTransferException extends DomainException
 {
     public function __construct(
-        ?string $message = 'Invalid Credentials',
+        ?string $message = 'users cannot transfer money to themselves',
         int $code = 0,
         ?\Throwable $previous = null
     ) {

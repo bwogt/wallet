@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Transfer;
 
 use DomainException;
 
-class InvalidPayerTypeException extends DomainException
+class InsufficientFundsException extends DomainException
 {
     public function __construct(
-        ?string $message = 'Invalid payer type.',
+        ?string $message = 'User does not have the necessary funds',
         int $code = 0,
         ?\Throwable $previous = null
     ) {

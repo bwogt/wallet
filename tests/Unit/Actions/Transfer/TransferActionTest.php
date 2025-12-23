@@ -6,12 +6,12 @@ use App\Actions\Transfer\TransferAction;
 use App\Constants\Transfer\TransferConstants;
 use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
-use App\Exceptions\InsufficientFundsException;
-use App\Exceptions\InvalidPayerTypeException;
-use App\Exceptions\InvalidTransferValueException;
-use App\Exceptions\SelfTransferException;
-use App\Exceptions\TransferUnauthorizedException;
-use App\Exceptions\UserNotFoundException;
+use App\Exceptions\Transfer\InsufficientFundsException;
+use App\Exceptions\Transfer\InvalidPayerTypeException;
+use App\Exceptions\Transfer\InvalidTransferValueException;
+use App\Exceptions\Transfer\SelfTransferException;
+use App\Exceptions\Transfer\TransferUnauthorizedException;
+use App\Exceptions\User\UserNotFoundException;
 use App\Models\Transaction;
 use Database\Factories\UserFactory;
 

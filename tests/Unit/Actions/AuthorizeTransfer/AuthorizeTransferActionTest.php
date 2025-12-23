@@ -3,7 +3,7 @@
 namespace Tests\Unit\Actions\AuthorizeTransfer;
 
 use App\Actions\Transfer\AuthorizeTransferAction;
-use App\Exceptions\TransferUnauthorizedException;
+use App\Exceptions\Transfer\TransferUnauthorizedException;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;

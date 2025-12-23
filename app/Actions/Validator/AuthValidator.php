@@ -3,7 +3,7 @@
 namespace App\Actions\Validator;
 
 use App\Dto\Auth\Login\CredentialDTO;
-use App\Exceptions\InvalidCredentialsException;
+use App\Exceptions\Auth\InvalidCredentialsException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 

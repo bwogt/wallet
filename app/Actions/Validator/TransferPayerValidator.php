@@ -2,9 +2,9 @@
 
 namespace App\Actions\Validator;
 
-use App\Exceptions\InsufficientFundsException;
-use App\Exceptions\InvalidPayerTypeException;
-use App\Exceptions\SelfTransferException;
+use App\Exceptions\Transfer\InsufficientFundsException;
+use App\Exceptions\Transfer\InvalidPayerTypeException;
+use App\Exceptions\Transfer\SelfTransferException;
 use App\Models\User;
 
 class TransferPayerValidator

@@ -2,7 +2,7 @@
 
 namespace App\Actions\Validator;
 
-use App\Exceptions\UserNotFoundException;
+use App\Exceptions\User\UserNotFoundException;
 use App\Models\User;
 
 class UserValidator

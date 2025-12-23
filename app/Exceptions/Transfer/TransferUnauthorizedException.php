@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Transfer;
 
 use DomainException;
 
-class InvalidTransferValueException extends DomainException
+class TransferUnauthorizedException extends DomainException
 {
     public function __construct(
-        ?string $message = 'Invalid transfer value.',
+        ?string $message = 'Transfer unauthorized.',
         int $code = 0,
         ?\Throwable $previous = null
     ) {

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Transfer;
 
 use DomainException;
 
-class InsufficientFundsException extends DomainException
+class InvalidTransferValueException extends DomainException
 {
     public function __construct(
-        ?string $message = 'User does not have the necessary funds',
+        ?string $message = 'Invalid transfer value.',
         int $code = 0,
         ?\Throwable $previous = null
     ) {
