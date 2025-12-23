@@ -39,4 +39,8 @@ return [
         'url' => env('TRANSFER_AUTHORIZATION_URL'),
     ],
 
+    'notification' => [
+        'url' => env('SERVICE_NOTIFICATION_URL'),
+    ],
+
 ];

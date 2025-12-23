@@ -8,6 +8,7 @@ use App\Actions\Validator\UserValidator;
 use App\Dto\Transaction\Transfer\TransferDTO;
 use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
+use App\Events\Transaction\Transfer\TransferCompleted;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,8 @@ class TransferAction
             $this->incrementPayeeBalance($transaction, $data);
 
             $this->logSuccess($transaction);
+
+            event(new TransferCompleted($transaction));
 
             return $transaction;
         });
