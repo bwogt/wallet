@@ -4,7 +4,7 @@ namespace App\Actions\Deposit;
 
 use App\Actions\Validator\DepositLimitsValidator;
 use App\Actions\Validator\UserValidator;
-use App\Dto\Transaction\DepositDTO;
+use App\Dto\Transaction\Deposit\DepositDTO;
 use App\Enum\Transaction\TransactionStatus;
 use App\Enum\Transaction\TransactionType;
 use App\Models\Transaction;

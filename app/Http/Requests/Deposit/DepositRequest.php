@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Deposit;
 
-use App\Dto\Transaction\DepositDTO;
+use App\Dto\Transaction\Deposit\DepositDTO;
 use App\Http\Requests\Base\ApiFormRequest;
 
 class DepositRequest extends ApiFormRequest

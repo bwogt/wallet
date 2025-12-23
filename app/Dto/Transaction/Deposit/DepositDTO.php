@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto\Transaction;
+namespace App\Dto\Transaction\Deposit;
 
 class DepositDTO
 {
