@@ -26,7 +26,7 @@ class TransferRulesTest extends TransferTestSetUp
             );
     }
 
-     public function test_should_return_an_error_when_the_payee_id_field_does_not_exist(): void
+    public function test_should_return_an_error_when_the_payee_id_field_does_not_exist(): void
     {
         Sanctum::actingAs($this->payer);
 
