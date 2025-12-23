@@ -75,4 +75,10 @@ Para executar os testes utilize o seguinte comando
 ./vendor/bin/sail artisan test
 ~~~
 
+## Documentação
+Para visualizar a documentação acesse
+~~~bash
+http://localhost/docs/api#/
+~~~
+
 
