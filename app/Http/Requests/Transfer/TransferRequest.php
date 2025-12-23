@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Deposit;
+namespace App\Http\Requests\Transfer;
 
-use App\Dto\Transaction\Deposit\DepositDTO;
+use App\Dto\Transaction\Transfer\TransferDTO;
 use App\Http\Requests\Base\ApiFormRequest;
 
-class DepositRequest extends ApiFormRequest
+class TransferRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,14 +15,12 @@ class DepositRequest extends ApiFormRequest
         return true;
     }
 
-    /**
-     * Convert the request data to a DTO.
-     */
-    public function toDTO(): DepositDTO
+    public function toDTO(): TransferDTO
     {
-        return new DepositDTO(
-            user_id: $this->user()->id,
-            value: $this->value
+        return new TransferDTO(
+            payer_id: $this->user()->id,
+            payee_id: $this->input('payee_id'),
+            value: $this->input('value'),
         );
     }
 
@@ -34,6 +32,7 @@ class DepositRequest extends ApiFormRequest
     public function rules(): array
     {
         return [
+            'payee_id' => ['required', 'exists:users,id'],
             'value' => ['required', 'numeric'],
         ];
     }

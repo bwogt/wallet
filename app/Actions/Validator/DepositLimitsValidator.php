@@ -3,7 +3,7 @@
 namespace App\Actions\Validator;
 
 use App\Constants\Deposit\DepositConstants;
-use App\Exceptions\InvalidDepositAmountException;
+use App\Exceptions\Deposit\InvalidDepositAmountException;
 
 class DepositLimitsValidator
 {

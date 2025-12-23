@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Auth;
 
 use DomainException;
 
-class UserNotFoundException extends DomainException
+class InvalidCredentialsException extends DomainException
 {
     public function __construct(
-        ?string $message = 'Invalid deposit amount.',
+        ?string $message = 'Invalid Credentials',
         int $code = 0,
         ?\Throwable $previous = null
     ) {

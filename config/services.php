@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'transfer_authorization' => [
+        'url' => env('TRANSFER_AUTHORIZATION_URL'),
+    ],
+
 ];

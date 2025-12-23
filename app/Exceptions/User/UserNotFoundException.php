@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\User;
 
 use DomainException;
 
-class InvalidDepositAmountException extends DomainException
+class UserNotFoundException extends DomainException
 {
     public function __construct(
         ?string $message = 'Invalid deposit amount.',

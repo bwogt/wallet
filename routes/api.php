@@ -27,6 +27,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         Route::controller(TransactionController::class)->prefix('transactions')
             ->name('transactions.')->group(function () {
                 Route::post('deposit', 'deposit')->name('deposit');
+                Route::post('transfer', 'transfer')->name('transfer');
             });
     });
 });

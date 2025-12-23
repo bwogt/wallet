@@ -3,7 +3,7 @@
 namespace Tests\Unit\Actions\Auth\Login;
 
 use App\Dto\Auth\Login\LoginDTO;
-use App\Exceptions\InvalidCredentialsException;
+use App\Exceptions\Auth\InvalidCredentialsException;
 
 class LoginActionTest extends LoginActionTestSetUp
 {
