@@ -244,6 +244,8 @@ return [
         'blood_type' => 'tipo sanguíneo',
         'birth_date' => 'data de nascimento',
         'value' => 'valor',
+        'payer_id' => 'Idetificador do Pagador',
+        'payee_id' => 'Indetificador do beneficiário',
     ],
 
 ];

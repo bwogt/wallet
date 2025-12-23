@@ -10,5 +10,5 @@ return [
     'transfer_value_above_maximum' => 'O valor da transferência deve ser menor ou igual a R$:maximum',
     'transfer_cannot_send_to_self' => 'Não é possível realizar uma transferência para a sua própria conta.',
     'transfer_insufficient_funds' => 'Saldo insuficiente para realizar a transferência.',
-    'transfer_unauthorized' => 'Transferência não autorizada pela central de transferências.',
+    'transfer_unauthorized' => 'Transferência não autorizada pela central.',
 ];
